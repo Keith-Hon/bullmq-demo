@@ -15,6 +15,9 @@ export const connection = {
 // Create a new connection in every instance
 export function getQueue() {
     return new Queue(TASK_QUEUE, {
-        connection
+        connection,
+        defaultJobOptions: {
+            attempts: 3
+        }
     });
 }

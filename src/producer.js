@@ -1,8 +1,8 @@
-import { getQueue, TASK_QUEUE } from "./queue.js";
+import { getQueue, TASK_QUEUE } from "./queue";
 
 const queue = getQueue();
 
-for(let i = 0; i < 1000;i ++){
+for (let i = 0; i < 1000; i++) {
     queue.add(TASK_QUEUE, { color: "testing2" });
 }
 

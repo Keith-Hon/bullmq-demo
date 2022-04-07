@@ -1,19 +1,23 @@
 {
     "name": "bullmq-demo",
     "version": "1.0.0",
-    "type": "module",
-    "description": "",   
-    "scripts": {       
+    "description": "",
+    "scripts": {
+        "build": "babel ./src/*.js -d dist",
+        "producer": "npm run build && node dist/producer.js",
+        "consumer": "npm run build && node dist/consumer.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "bull": "^4.8.1",
         "bullmq": "1.78.2",
-        "find-up": "4.1.0",
-        "dotenv": "^10.0.0"
+        "dotenv": "^10.0.0",
+        "find-up": "4.1.0"
     },
-    "devDependencies": {       
-        
+    "devDependencies": {
+        "@babel/cli": "^7.17.6",
+        "@babel/core": "^7.17.9",
+        "@babel/preset-env": "^7.16.11"
     }
 }

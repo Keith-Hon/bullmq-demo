@@ -5,15 +5,20 @@
     "scripts": {
         "build": "babel ./src/*.js -d dist",
         "producer": "npm run build && node dist/producer.js",
-        "consumer": "npm run build && node dist/consumer.js"
+        "consumer": "npm run build && node dist/consumer.js",
+        "stt_consumer": "npm run build && node dist/stt-consumer.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "axios": "^1.7.2",
         "bull": "^4.8.1",
         "bullmq": "1.78.2",
         "dotenv": "^10.0.0",
-        "find-up": "4.1.0"
+        "find-up": "4.1.0",
+        "form-data": "^4.0.0",
+        "node-fetch": "^3.3.2",
+        "openai": "^4.53.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.17.6",

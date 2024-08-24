@@ -1,5 +1,8 @@
 import { Worker, QueueScheduler } from "bullmq";
 import { connection, TASK_QUEUE, getQueue } from "./queue";
+import child_process from "child_process";
+import { Queue } from "bullmq";
+import fs from 'fs';
 
 (async () => {
     // Clean all stalled tasks from the queue
@@ -9,12 +12,33 @@ import { connection, TASK_QUEUE, getQueue } from "./queue";
     //     await job.moveToFailed();
     // }
 
+    const sttQueue = new Queue('speech-to-text', {
+        connection,
+        defaultJobOptions: {
+            attempts: 3
+        }
+    });
+
     const queueScheduler = new QueueScheduler(TASK_QUEUE, { connection });
 
     const worker = new Worker(
         TASK_QUEUE,
         async (job) => {
-            console.log(job.data.color);
+            console.log(job.data.youtube_video_id);
+            const url = '/media/keithhon/ds923/disk2/youtube-downloader-tmp/downloads/' + job.data.youtube_video_id + '.mp3';
+
+            // check if file exists
+            if (fs.existsSync(url)) {
+                console.log('file exists');
+                sttQueue.add("speech-to-text", { url, video_id: job.data.youtube_video_id });
+                return;
+            }
+
+            child_process.execSync(
+                `yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "/media/keithhon/ds923/disk2/youtube-downloader-tmp/downloads/%(id)s.%(ext)s" https://www.youtube.com/watch?v=${job.data.youtube_video_id}`
+            );
+
+            sttQueue.add("speech-to-text", { url, video_id: job.data.youtube_video_id });
         },
         { autorun: true, connection, concurrency: 50 }
     );

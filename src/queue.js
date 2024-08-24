@@ -4,12 +4,12 @@ dotenv.config({ path: find.sync(".env") });
 
 import { Queue } from "bullmq";
 
-export const TASK_QUEUE = "task-queue";
+export const TASK_QUEUE = "youtube-downloader";
 
 export const connection = {
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
-    password: process.env.REDIS_PASSWORD
+    // password: process.env.REDIS_PASSWORD
 };
 
 // Create a new connection in every instance
